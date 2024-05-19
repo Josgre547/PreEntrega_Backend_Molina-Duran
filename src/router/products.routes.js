@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
   try {
     const { limit } = req.query;
     const products = await productManager.getProducts(limit);
-    // throw new Error("Error de productos") // Forzamos el error
+
     res.status(200).json({ status: "success", products });
   } catch (error) {
     console.log(error);

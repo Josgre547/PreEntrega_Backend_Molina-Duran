@@ -14,11 +14,11 @@ export const checkProductData = async (req = request, res = response, next) => {
     };
 
     const products = await productManager.getProducts();
-    // Validar que no se repita el campo de code
+
     const productExists = products.find((p) => p.code === code);
+    
     if (productExists) return res.status(400).json({ status: "Error", msg: `Vaya...  Parece que el prodcuto con el codigo: ${code} ya existe` });
 
-    // Validamos que los campos sean obligatorios
     const checkData = Object.values(newProduct).includes(undefined);
     if (checkData) return res.status(400).json({ status: "Error", msg: "Todos los datos son obligatorios, por favor llenalos :)" });
 
