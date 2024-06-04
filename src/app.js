@@ -1,19 +1,29 @@
 import express from "express";
-import router from  "./router/index.js";
+import routes from "./router/index.js";
 import __dirname from "./dirname.js";
+import handlebars from "express-handlebars";
+import { Server } from "socket.io";
+import viewsRoutes from "./router/views.routes.js";
 
-const PORT = 8080;
 const app = express();
 
-//Middlewares
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use("static",express.static("public"));
+app.engine("handlebars", handlebars.engine());
+app.set("views", __dirname + "/views");
+app.set("view engine", "handlebars");
+app.use(express.static("public"));
 
-//Rutas
-app.use("/api", router);
+app.use("/api", routes);
 
-app.listen(PORT, () =>{
-     console.log(`Motores Encendidos Y Listos Para Arrancar!! Puerto: ${PORT}`)
-})
+app.use("/", viewsRoutes)
+
+const httpServer = app.listen(8080, () => {
+  console.log("Servidor escuchando en el puerto 8080");
+});
+
+export const io = new Server(httpServer);
+
+io.on("connection", (socket) => {
+  console.log("Nuevo usuario Conectado");
+});

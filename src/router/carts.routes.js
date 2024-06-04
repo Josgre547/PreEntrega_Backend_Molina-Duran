@@ -1,7 +1,6 @@
 import { Router } from "express";
 import cartManager from "../cartManager.js";
 import productManager from "../productManager.js";
-import { checkCartProducts } from "../middlewares/checkCartProducts.middleware.js";
 
 const router = Router();
 
@@ -29,7 +28,7 @@ router.get("/:cid", async (req, res) => {
   }
 });
 
-router.post("/:cid/product/:pid",  checkCartProducts, async (req, res) => {
+router.post("/:cid/product/:pid", async (req, res) => {
   try {
     const { cid, pid } = req.params;
 
