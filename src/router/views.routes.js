@@ -16,9 +16,6 @@ router.get("/", async (req, res) => {
 
 router.get("/realtimeproducts", async (req, res) => {
   try {
-    const products = await productManager.getProducts();
-    io.emit("products", products);
-
     res.render("realTimeProducts");
   } catch (error) {
     console.log(error);
