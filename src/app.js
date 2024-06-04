@@ -28,5 +28,5 @@ export const io = new Server(httpServer);
 io.on("connection", async socket => {
   console.log("Nuevo usuario Conectado");
   const products = await productManager.getProducts();
-  io.emit('products', {products});
+  io.emit('products', products);
 });
